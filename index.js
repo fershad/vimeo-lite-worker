@@ -1,5 +1,12 @@
 import * as cheerio from 'cheerio';
 
+const idRegex = /(https?:\/\/)?(www\.)?(player\.)?vimeo\.com\/([a-z]*\/)*([0-9]{6,11})[?]?.*/;
+
+function getID(url) {
+  var match = url.match(idRegex);
+  return (match && match[5]) ? match[5] : false;
+}
+
 async function findIframes(req) {
   const html = await req.text()
   try {
@@ -8,9 +15,8 @@ async function findIframes(req) {
     const iframes = $('iframe[src*="player.vimeo.com"]')
     for (const iframe of $(iframes)) {
       let src = $(iframe).attr('src')
-      // const id = await getID(src)
+      const id = await getID(src)
       const className = $(iframe).attr('class')
-      const id = new URL(src).pathname.toString()
 
       if (id) {
         const lite = `<lite-vimeo class="${className || ''}" videoid="${id}"'> </lite-vimeo>`
