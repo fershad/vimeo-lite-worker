@@ -1,6 +1,6 @@
-# Lite YouTube Worker 👷
+# Lite Vimeo Worker 👷
 
-A Cloudflare Worker that looks for YouTube embeds on a page, and replaces them with the Lite YouTube Embed facade.
+A Cloudflare Worker that looks for Vimeo embeds on a page, and replaces them with the Lite Vimeo Embed facade.
 
 ## Why would you want to do this?
 
@@ -9,17 +9,15 @@ A Cloudflare Worker that looks for YouTube embeds on a page, and replaces them w
 
 ### Better performance
 
-Rather than loading the YouTube player, and all the JavaScript that comes with it. This Worker replaces it with a facade. YouTube's JS code gets downloaded when the user wants to use the player.
-
-See the [performance comparison](https://github.com/paulirish/lite-youtube-embed#comparison) of the original web component.
+Rather than loading the Vimeo player, and all the JavaScript that comes with it. This Worker replaces it with a facade. Vimeo's JS code gets downloaded when the user wants to use the player.
 
 ### Better for the planet
 
-By default the YouTube player downloads just over 1MB of data when it is loaded on a page. Using this Worker can reduce the initial size of your page by about 1MB (about 0.305 grams of CO2).
+By default the Vimeo player downloads just around 250kB of data when it is loaded on a page. Using this Worker can reduce the initial size of your page by about 200kB per video (about 0.050 grams of CO2).
 
 ## Options
 
-This Worker uses [justinribeiro/lite-youtube](https://github.com/justinribeiro/lite-youtube). You can adjust the script to use any of options available in that web component.
+This Worker uses [slightlyoff/lite-vimeo](https://github.com/slightlyoff/lite-vimeo). You can adjust the script to use any of options available in that web component.
 
 ## Try it out
 
