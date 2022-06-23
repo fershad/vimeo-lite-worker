@@ -1,26 +1,19 @@
 import * as cheerio from 'cheerio';
 
-const ytIdRegex = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
-
-function getID(url) {
-  var match = url.match(ytIdRegex);
-  return (match && match[7].length == 11) ? match[7] : false;
-}
-
 async function findIframes(req) {
   const html = await req.text()
   try {
     const $ = cheerio.load(html)
 
-    const iframes = $('iframe[src*="youtube"]')
+    const iframes = $('iframe[src*="player.vimeo.com"]')
     for (const iframe of $(iframes)) {
       let src = $(iframe).attr('src')
-      const id = await getID(src)
+      // const id = await getID(src)
       const className = $(iframe).attr('class')
-      const params = new URL(src).searchParams.toString()
+      const id = new URL(src).pathname.toString()
 
       if (id) {
-        const lite = `<lite-youtube class="${className || ''}" videoid="${id}" nocookie params='${params}'> </lite-youtube>`
+        const lite = `<lite-vimeo class="${className || ''}" videoid="${id}"'> </lite-vimeo>`
         $(iframe).replaceWith(lite)
       }
     }
@@ -34,7 +27,7 @@ async function findIframes(req) {
 
 class addJS {
   async element(element) {
-    element.append(`<script type="module" src="https://cdn.jsdelivr.net/npm/@justinribeiro/lite-youtube@1.3.1/lite-youtube.js"></script>`, {
+    element.append(`<script type="module" src="https://cdn.jsdelivr.net/npm/@slightlyoff/lite-vimeo@0.1.1/lite-vimeo.js"></script>`, {
       html: true,
     })
   }
